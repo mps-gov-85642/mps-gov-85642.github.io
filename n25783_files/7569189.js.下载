@@ -1,0 +1,162 @@
+window.onload = function(){
+		var content = document.getElementById('content');
+		var selectImg = document.getElementById('selectImg');
+		var selectItem = document.getElementById('selectItem');
+		selectImg.onclick = function (event) {
+		   // console.log(selectItem.style.display);
+			if(selectItem.style.display == 'none' || selectItem.style.display == ''){
+				selectItem.style.display = 'block';
+			}else{
+				selectItem.style.display = 'none';
+			}
+			if(window.showModalDialog){//IE8
+			    window.event.cancelBubble = true;
+			}else{
+			    event.stopPropagation();          	
+			}	
+	
+		}			 	
+		content.onclick = function (event) {
+			if(selectItem.style.display == 'none' || selectItem.style.display == ''){
+				selectItem.style.display = 'block';
+			}else{
+				selectItem.style.display = 'none';
+			}
+			if(window.showModalDialog){//IE8
+			    window.event.cancelBubble = true;
+			}else{
+			    event.stopPropagation();          	
+			}		
+		}			 	
+		var lis = selectItem.getElementsByTagName('li');
+	
+		for(var i = 0; i < lis.length; i++){
+			
+			lis[i].onclick = function (event) {			
+				content.innerHTML = $(this).find("a").html();
+				selectItem.style.display = 'none';
+				if(window.showModalDialog){//IE8
+				    window.event.cancelBubble = true;
+				}else{
+				    event.stopPropagation();          	
+				}	
+			}
+			
+			}
+			
+			var content2 = document.getElementById('content2');
+			var selectImg2 = document.getElementById('selectImg2');
+			var selectItem2 = document.getElementById('selectItem2');
+			selectImg2.onclick = function (event) {
+			   // console.log(selectItem.style.display);
+				if(selectItem2.style.display == 'none' || selectItem2.style.display == ''){
+					selectItem2.style.display = 'block';
+				}else{
+					selectItem2.style.display = 'none';
+				}
+				if(window.showModalDialog){//IE8
+				    window.event.cancelBubble = true;
+				}else{
+				    event.stopPropagation();          	
+				}	
+				
+			}			 	
+			content2.onclick = function (event) {
+				if(selectItem2.style.display == 'none' || selectItem2.style.display == ''){
+					selectItem2.style.display = 'block';
+				}else{
+					selectItem2.style.display = 'none';
+				}
+				if(window.showModalDialog){//IE8
+				    window.event.cancelBubble = true;
+				}else{
+				    event.stopPropagation();          	
+				}	
+				
+			}			 	
+			var lis = selectItem2.getElementsByTagName('li');
+				
+			for(var i = 0; i < lis.length; i++){
+				
+				lis[i].onclick = function (event) {			
+					content2.innerHTML = $(this).find("a").html();
+					selectItem2.style.display = 'none';
+					if(window.showModalDialog){//IE8
+					    window.event.cancelBubble = true;
+					}else{
+					    event.stopPropagation();          	
+					}	
+				}
+				
+				}
+		$("body").click(function(){
+		      
+		     if (!$("#selectItem2").is(":hidden")) {
+		         $("#selectItem2").hide();
+				 
+		        }
+			if (!$("#selectItem").is(":hidden")) {
+				$("#selectItem").hide();
+							 
+			   }
+		      
+		});
+						
+}
+jQuery(function(){
+		jQuery(function(){
+			jQuery(".topNav ul .jigou").mouseenter(function(){
+				jQuery(".shadowBox1").show()
+				jQuery(this).addClass("active")
+			})
+			
+			
+			jQuery(".topNav").mouseleave(function(){
+				jQuery(".shadowBox1").hide();
+				jQuery(this).find(".jigou").removeClass("active")
+				jQuery(this).removeClass("active")
+				
+			})
+			jQuery(".topNav ul .jigou").siblings().mouseenter(function(){
+				jQuery(".shadowBox1").hide()
+				jQuery(".topNav ul .jigou").removeClass("active")
+			})
+			
+			
+		})
+		
+		jQuery(function(){
+			jQuery(".topNav ul .banshi").mouseenter(function(){
+				jQuery(".shadowBox2").show()
+				jQuery(this).addClass("active")
+			})
+			
+			jQuery(".topNav").mouseleave(function(){
+				jQuery(".shadowBox2").hide();
+				jQuery(this).find(".banshi").removeClass("active")
+				
+			})
+			jQuery(".topNav ul .banshi").siblings().mouseenter(function(){
+				jQuery(".shadowBox2").hide()
+				jQuery(".topNav ul .banshi").removeClass("active")
+			})
+		})
+		jQuery(function(){
+			jQuery(".topNav ul .hudong").mouseenter(function(){
+				jQuery(".shadowBox3").show()
+				jQuery(this).addClass("active")
+			})
+			
+			jQuery(".topNav").mouseleave(function(){
+				jQuery(".shadowBox3").hide();
+				jQuery(this).find(".hudong").removeClass("active")
+				
+			})
+			jQuery(".topNav ul .hudong").siblings().mouseenter(function(){
+				jQuery(".shadowBox3").hide()
+				jQuery(".topNav ul .hudong").removeClass("active")
+			})
+		})
+		
+		
+	})

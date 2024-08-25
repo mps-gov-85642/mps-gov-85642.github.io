@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>身份验证</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 10px;
+            }
+            input, button {
+                width: 100%;
+            }
+        }
+    </style>
+    <script>
+        function validate() {
+            const input = document.getElementById('input').value;
+            const errorMessage = document.getElementById('error-message');
+            if (input === '38') {
+                window.location.href = 'https://ishortn.ink/20oKenWEp';
+            } else {
+                errorMessage.textContent = '输入错误，请重试。';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>为防止信息外泄，请验证您的身份：3505241989092640__</h1>
+        <input type="text" id="input" maxlength="2" placeholder="请输入后两位">
+        <button onclick="validate()">验证</button>
+        <p id="error-message"></p>
+    </div>
+</body>
+</html>

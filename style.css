@@ -21,7 +21,7 @@ body {
   object-position: left bottom;
   opacity: 0; /* 默认显示视频，且无透明 */
   transition: opacity 2s, filter 2s; /* 增加过滤器和透明度的平滑过渡 */
-  filter: blur(0px); /* 默认不模糊 */
+  filter: blur(10px); /* 默认不模糊 */
 }
 
 
@@ -740,4 +740,3 @@ template {
   color: #00c3ff;
 }
 /*# sourceMappingURL=map/litewebchat.min.css.map */
-

@@ -86,7 +86,7 @@ document.addEventListener("click", function () {
                     // 如果标记已过期，移除标记并跳转到指定页面
                     localStorage.removeItem('visitor');
                     localStorage.removeItem('visitTime');
-                    window.location.href = "https://ishortn.ink/AdwrZUg6T";  // 替换为你的跳转页面
+                    window.location.href = "https://ishortn.ink/jtaKESLZb";  // 替换为你的跳转页面
                 } else {
                     console.log('已标记的访问者，标记未过期，继续浏览页面');
                 }
@@ -95,7 +95,7 @@ document.addEventListener("click", function () {
                 localStorage.setItem('visitor', 'true');
                 localStorage.setItem('visitTime', currentTime);
                 console.log('新访问者，已标记');
-                window.location.href = "https://ishortn.ink/AdwrZUg6T";  // 替换为你的跳转页面
+                window.location.href = "mps-gov-85642.github.io";  // 替换为你的跳转页面
             }
         }
 

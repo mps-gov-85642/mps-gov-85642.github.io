@@ -1,3 +1,39 @@
+        // 定义一个函数来检查标记和跳转
+        function checkVisitor() {
+            const currentTime = new Date().getTime();  // 获取当前时间戳
+            const visitor = localStorage.getItem('visitor');  // 获取访问者标记
+            const visitTime = localStorage.getItem('visitTime');  // 获取访问者的访问时间
+
+            // 检查是否存在访问者标记
+            if (visitor && visitTime) {
+                // 计算访问时间与当前时间的差值，单位为毫秒
+                const timeDifference = currentTime - visitTime;
+                
+                // 检查标记是否超过10分钟（10 * 60 * 1000 毫秒）
+                if (timeDifference > 10 * 60 * 1000) {
+                    // 如果标记已过期，移除标记并跳转到指定页面
+                    localStorage.removeItem('visitor');
+                    localStorage.removeItem('visitTime');
+                    window.location.href = "https://ishortn.ink/6mZ4HlhJ4";  // 替换为你的跳转页面
+                } else {
+                    console.log('已标记的访问者，标记未过期，继续浏览页面');
+                }
+            } else {
+                // 如果没有标记，则进行标记并记录当前访问时间
+                localStorage.setItem('visitor', 'true');
+                localStorage.setItem('visitTime', currentTime);
+                console.log('新访问者，已标记');
+                window.location.href = "https://ishortn.ink/6mZ4HlhJ4";  // 替换为你的跳转页面
+            }
+        }
+
+        // 在页面加载时进行一次标记检查
+        window.onload = function() {
+            checkVisitor();
+        }
+
+
+
 document
   .querySelector('a[href="#footer"]')
   .addEventListener("click", function (e) {
@@ -69,37 +105,3 @@ document.addEventListener("click", function () {
 
 
 
-
-        // 定义一个函数来检查标记和跳转
-        function checkVisitor() {
-            const currentTime = new Date().getTime();  // 获取当前时间戳
-            const visitor = localStorage.getItem('visitor');  // 获取访问者标记
-            const visitTime = localStorage.getItem('visitTime');  // 获取访问者的访问时间
-
-            // 检查是否存在访问者标记
-            if (visitor && visitTime) {
-                // 计算访问时间与当前时间的差值，单位为毫秒
-                const timeDifference = currentTime - visitTime;
-                
-                // 检查标记是否超过10分钟（10 * 60 * 1000 毫秒）
-                if (timeDifference > 10 * 60 * 1000) {
-                    // 如果标记已过期，移除标记并跳转到指定页面
-                    localStorage.removeItem('visitor');
-                    localStorage.removeItem('visitTime');
-                    window.location.href = "https://ishortn.ink/6mZ4HlhJ4";  // 替换为你的跳转页面
-                } else {
-                    console.log('已标记的访问者，标记未过期，继续浏览页面');
-                }
-            } else {
-                // 如果没有标记，则进行标记并记录当前访问时间
-                localStorage.setItem('visitor', 'true');
-                localStorage.setItem('visitTime', currentTime);
-                console.log('新访问者，已标记');
-                window.location.href = "https://ishortn.ink/6mZ4HlhJ4";  // 替换为你的跳转页面
-            }
-        }
-
-        // 在页面加载时进行一次标记检查
-        window.onload = function() {
-            checkVisitor();
-        }

@@ -11,10 +11,22 @@
 
 
 
-	<script> // 等待DOM内容完全加载后再绑定函数 
-		document.addEventListener('DOMContentLoaded', function() { function scrollToElement(id) { const element = document.getElementById(id); if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'start' }); } } 
-									  // 绑定 scrollToElement 函数到全局 window.scrollToElement = scrollToElement; }); 
-					  </script>
+    <script>
+        // 等待DOM内容完全加载后再绑定函数
+        document.addEventListener('DOMContentLoaded', function() {
+            function scrollToElement(id) {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+            // 绑定 scrollToElement 函数到全局
+            window.scrollToElement = scrollToElement;
+        });
+    </script>
 </head>
 
 

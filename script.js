@@ -75,50 +75,67 @@ document.addEventListener("click", function () {
 
 
 
-// 解密和播放音频的函数
-async function decryptAndPlayAudio(url, key) {
+
+async function decryptAndStreamAudio(url, key) {
     try {
-        // 获取加密的音频文件
-        const response = await fetch(url);
-        const encryptedAudio = await response.arrayBuffer();
-
-        // 将密钥转换为CryptoKey
-        const cryptoKey = await crypto.subtle.importKey(
-            'raw',
-            new TextEncoder().encode(key),
-            { name: 'AES-CBC' },
-            false,
-            ['decrypt']
-        );
-
-        // 从加密文件中提取IV（前16字节）
-        const iv = new Uint8Array(encryptedAudio.slice(0, 16));
-        const ciphertext = encryptedAudio.slice(16);  // 剩余部分是加密数据
-
-        // 使用AES-CBC解密音频数据
-        const decryptedAudio = await crypto.subtle.decrypt(
-            { name: 'AES-CBC', iv: iv },
-            cryptoKey,
-            ciphertext
-        );
-
-        // 将解密后的音频数据转换为Blob并生成URL
-        const blob = new Blob([decryptedAudio], { type: 'audio/mpeg' });
-        const audioUrl = URL.createObjectURL(blob);
-
-        // 设置audio播放器的src属性
+        // 创建一个MediaSource实例用于流式传输
+        const mediaSource = new MediaSource();
         const audioPlayer = document.getElementById('audioPlayer');
-        audioPlayer.src = audioUrl;
-        audioPlayer.play();
+        audioPlayer.src = URL.createObjectURL(mediaSource);
+
+        mediaSource.addEventListener('sourceopen', async () => {
+            const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
+            
+            // 获取音频流
+            const response = await fetch(url);
+            const reader = response.body.getReader();
+
+            // 将密钥转换为CryptoKey
+            const cryptoKey = await crypto.subtle.importKey(
+                'raw',
+                new TextEncoder().encode(key),
+                { name: 'AES-CBC' },
+                false,
+                ['decrypt']
+            );
+
+            let isFirstChunk = true;
+            let iv = null;
+
+            // 逐块读取并解密音频数据
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                // 如果是第一块数据，获取IV（前16字节）
+                if (isFirstChunk) {
+                    iv = new Uint8Array(value.slice(0, 16));
+                    value = value.slice(16);
+                    isFirstChunk = false;
+                }
+
+                // 解密每一块数据
+                const decryptedChunk = await crypto.subtle.decrypt(
+                    { name: 'AES-CBC', iv: iv },
+                    cryptoKey,
+                    value
+                );
+
+                // 将解密的数据追加到SourceBuffer
+                sourceBuffer.appendBuffer(new Uint8Array(decryptedChunk));
+            }
+
+            // 标记媒体流结束
+            mediaSource.endOfStream();
+        });
     } catch (err) {
-        console.error("Error decrypting and playing audio:", err);
+        console.error("Error decrypting and streaming audio:", err);
     }
 }
 
-// 页面加载时调用解密和播放函数
+// 页面加载时调用解密和流式播放函数
 window.onload = function() {
     const encryptedAudioUrl = './1.mp3';  // 加密后的音频文件路径
     const secretKey = '1234567890abcdef1234567890abcdef';  // 32字节密钥
-    decryptAndPlayAudio(encryptedAudioUrl, secretKey);
+    decryptAndStreamAudio(encryptedAudioUrl, secretKey);
 };
-

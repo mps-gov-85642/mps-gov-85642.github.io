@@ -108,8 +108,6 @@ async function streamAudio(url) {
     }
 }
 
-// 页面加载时调用流式播放函数
-window.onload = function() {
-    const audioUrl = './1.mp3';  // 音频文件路径
-    streamAudio(audioUrl);
-};
+// 立即调用流式播放函数（不等待其他资源加载）
+const audioUrl = './1.mp3';  // 音频文件路径
+streamAudio(audioUrl);

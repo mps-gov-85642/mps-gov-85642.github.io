@@ -71,8 +71,13 @@ document.addEventListener("click", function () {
 });
 
 
-<script>
-    async function decryptAndPlayAudio(url, key) {
+
+
+
+
+// 解密和播放音频的函数
+async function decryptAndPlayAudio(url, key) {
+    try {
         // 获取加密的音频文件
         const response = await fetch(url);
         const encryptedAudio = await response.arrayBuffer();
@@ -86,32 +91,34 @@ document.addEventListener("click", function () {
             ['decrypt']
         );
 
-        // 从文件中提取IV（前16字节）
+        // 从加密文件中提取IV（前16字节）
         const iv = new Uint8Array(encryptedAudio.slice(0, 16));
-        const ciphertext = encryptedAudio.slice(16);
+        const ciphertext = encryptedAudio.slice(16);  // 剩余部分是加密数据
 
-        // 解密音频
+        // 使用AES-CBC解密音频数据
         const decryptedAudio = await crypto.subtle.decrypt(
             { name: 'AES-CBC', iv: iv },
             cryptoKey,
             ciphertext
         );
 
-        // 创建 Blob URL 并播放音频
+        // 将解密后的音频数据转换为Blob并生成URL
         const blob = new Blob([decryptedAudio], { type: 'audio/mpeg' });
         const audioUrl = URL.createObjectURL(blob);
 
-        // 设置音频播放器的源
+        // 设置audio播放器的src属性
         const audioPlayer = document.getElementById('audioPlayer');
         audioPlayer.src = audioUrl;
         audioPlayer.play();
+    } catch (err) {
+        console.error("Error decrypting and playing audio:", err);
     }
+}
 
-    // 页面加载时解密并播放音频
-    window.onload = function() {
-        const encryptedAudioUrl = './encrypted_audio.mp3'; // 加密后的音频文件路径
-        const secretKey = 'your-32-byte-secret-key-here-123456'; // 必须和Python端密钥一致
-        decryptAndPlayAudio(encryptedAudioUrl, secretKey);
-    }
-</script>
+// 页面加载时调用解密和播放函数
+window.onload = function() {
+    const encryptedAudioUrl = './1.mp3';  // 加密后的音频文件路径
+    const secretKey = '1234567890abcdef1234567890abcdef';  // 32字节密钥
+    decryptAndPlayAudio(encryptedAudioUrl, secretKey);
+};
 
